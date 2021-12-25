@@ -16,9 +16,15 @@ public class OrganizationController {
     private OrganizationService organizationService;
     @Autowired
     private OrganizationConfig organizationConfig;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
         System.out.println(organizationConfig.toString());
         return organizationService.getById(organizationId);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public Boolean deleteOrganization(@PathVariable("organizationId") String organizationId) {
+        return organizationService.removeById(organizationId);
     }
 }
