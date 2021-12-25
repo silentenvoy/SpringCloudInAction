@@ -1,0 +1,28 @@
+server:
+  port: 8280
+
+spring:
+  application:
+    name: zuulsvr
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8180/eureka/
+zuul:
+  routes:
+    organizationservice : /organ/**
+#  ignored-services: organizationservice
+  prefix: /api
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    routes:
+      enabled: true

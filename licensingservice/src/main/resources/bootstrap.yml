@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: licensingservice
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://127.0.0.1:8080
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8180/eureka
+  instance:
+    prefer-ip-address: true
