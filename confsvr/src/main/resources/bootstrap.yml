@@ -23,7 +23,7 @@ spring:
           search-paths: /**
           username: cisnotcpp
           uri: https://gitee.com/cisnotcpp/config
-          password: userpassword
+          password: Muzi#331107
           default-label: master
 
 eureka:
