@@ -18,6 +18,7 @@ zuul:
     organizationservice : /organ/**
 #  ignored-services: organizationservice
   prefix: /api
+  sensitive-headers: Cookie,Set-Cookie
 management:
   endpoints:
     web:
@@ -26,3 +27,4 @@ management:
   endpoint:
     routes:
       enabled: true
+
