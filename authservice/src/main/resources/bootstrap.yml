@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: authservice
+  profiles:
+    active: dev
+  cloud:
+    config:
+      enabled: true
+      uri: http://127.0.0.1:8080
 
 eureka:
   client:

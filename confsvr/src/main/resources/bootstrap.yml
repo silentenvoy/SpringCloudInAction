@@ -8,7 +8,7 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:/config/licensingservice, classpath:/config/organizationservice
+          search-locations: classpath:/config/licensingservice, classpath:/config/organizationservice,classpath:/config/authservice
   profiles:
     active: native
 #
