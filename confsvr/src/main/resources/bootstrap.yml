@@ -21,9 +21,9 @@ spring:
       server:
         git:
           search-paths: /**
-          username: cisnotcpp
-          uri: https://gitee.com/cisnotcpp/config
-          password: Muzi#331107
+          username: 
+          uri: 
+          password: 
           default-label: master
 
 eureka:
