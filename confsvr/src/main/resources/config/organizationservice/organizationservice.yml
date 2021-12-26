@@ -1,6 +1,6 @@
 wiki:
   cccp:
-    name: licensingservice
+    name: organizationservice
     version: default
 spring:
   datasource:

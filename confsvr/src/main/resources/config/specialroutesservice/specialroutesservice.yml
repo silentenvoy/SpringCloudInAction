@@ -1,6 +1,6 @@
 wiki:
   cccp:
-    name: licensingservice
+    name: specialroutesservice
     version: default
 spring:
   datasource:
