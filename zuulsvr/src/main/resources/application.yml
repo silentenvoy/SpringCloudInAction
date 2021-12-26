@@ -14,10 +14,6 @@ eureka:
     service-url:
       defaultZone: http://localhost:8180/eureka/
 zuul:
-  routes:
-    organizationservice : /organ/**
-#  ignored-services: organizationservice
-  prefix: /api
   sensitive-headers: Cookie,Set-Cookie
 management:
   endpoints:

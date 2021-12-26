@@ -23,6 +23,7 @@ public class LicenseController {
     @RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
     public License getLicense(@PathVariable("licenseId") String licenseId) {
         System.out.println(String.format("%s 的当前线程号：%s", LicenseController.class.getName(), Thread.currentThread().getId()));
+        System.out.println(UserContextHolder.getContext().getAuthToken());
         return licenseService.getDetail(licenseId);
     }
 

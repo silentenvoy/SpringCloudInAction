@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import wiki.cccp.licensingservice.clients.OrganizationClient;
+import wiki.cccp.licensingservice.holder.UserContext;
+import wiki.cccp.licensingservice.holder.UserContextHolder;
 import wiki.cccp.licensingservice.mapper.LicenseMapper;
 import wiki.cccp.licensingservice.model.License;
 import wiki.cccp.licensingservice.model.Organization;
@@ -32,6 +34,7 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
     public License getDetail(String licenseId) {
         try {
             System.out.println(String.format("%s 的当前线程号：%s", LicenseServiceImpl.class.getName(), Thread.currentThread().getId()));
+            System.out.println(UserContextHolder.getContext().getAuthToken());
             License license = baseMapper.selectById(licenseId);
             Organization organization = client.getOrganization(license.getOrganizationId());
             license.setOrganization(organization);
