@@ -20,7 +20,8 @@ public class OrganizationController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
         System.out.println(organizationConfig.toString());
-        return organizationService.getById(organizationId);
+        System.out.println(Thread.currentThread().getId());
+        return organizationService.getOrganization(organizationId);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)

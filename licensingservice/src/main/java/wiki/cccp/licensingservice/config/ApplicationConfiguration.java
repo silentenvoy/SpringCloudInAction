@@ -1,13 +1,12 @@
 package wiki.cccp.licensingservice.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateFactory;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextListener;
@@ -38,12 +37,12 @@ public class ApplicationConfiguration {
 
     @Bean
     @LoadBalanced
-    public OAuth2RestTemplate oauth2RestTemplate(@Qualifier(value = "oauth2ClientContext") OAuth2ClientContext oauth2ClientContext, OAuth2ProtectedResourceDetails clientCredentialsResourceDetails) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(clientCredentialsResourceDetails, oauth2ClientContext);
-        return restTemplate;
+    public OAuth2RestTemplate oauth2RestTemplate(UserInfoRestTemplateFactory factory) {
+        return factory.getUserInfoRestTemplate();
     }
 
     @Bean
+    @Order(0)
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
     }

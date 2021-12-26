@@ -8,4 +8,10 @@ import wiki.cccp.organizationservice.service.OrganizationService;
 
 @Service
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization> implements OrganizationService {
+
+    @Override
+    public Organization getOrganization(String id) {
+        System.out.println(Thread.currentThread().getId());
+        return baseMapper.selectById(id);
+    }
 }
