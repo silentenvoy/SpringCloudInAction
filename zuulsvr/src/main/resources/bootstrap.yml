@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: zuulsvr
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://127.0.0.1:8080
+      enabled: true
 eureka:
   instance:
     prefer-ip-address: true

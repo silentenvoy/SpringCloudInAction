@@ -1,6 +1,7 @@
 package wiki.cccp.zuulsvr.util;
 
 import com.netflix.zuul.context.RequestContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterUtils {
     public static final String CORRELATION_ID = "correlation-id";
-    public static final String AUTH_TOKEN = "auth-token";
+    public static final String AUTH_TOKEN = HttpHeaders.AUTHORIZATION;
     public static final String USER_ID = "user-id";
     public static final String ORG_ID = "org-id";
     //前置过滤器
@@ -63,6 +64,7 @@ public class FilterUtils {
     }
 
     public final String getAuthToken() {
+        //同一线程
         RequestContext ctx = RequestContext.getCurrentContext();
         return ctx.getRequest().getHeader(AUTH_TOKEN);
     }
