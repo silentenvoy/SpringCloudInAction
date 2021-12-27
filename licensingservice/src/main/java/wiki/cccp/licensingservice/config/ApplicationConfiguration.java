@@ -34,7 +34,6 @@ public class ApplicationConfiguration {
     }
     /**
     @Bean
-    @LoadBalanced
     public OAuth2RestTemplate oauth2RestTemplate(UserInfoRestTemplateFactory factory) {
         OAuth2RestTemplate restTemplate = factory.getUserInfoRestTemplate();
         List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
