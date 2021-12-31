@@ -26,7 +26,7 @@ public class OrganizationController {
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public Boolean deleteOrganization(@PathVariable("organizationId") String organizationId) {
-        return organizationService.removeById(organizationId);
+        return organizationService.deleteOrganization(organizationId);
     }
 
 }

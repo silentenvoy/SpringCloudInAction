@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableFeignClients
 @EnableHystrix
 @EnableResourceServer
-@EnableBinding(Sink.class)
 public class LicensingserviceApplication {
 
     public static void main(String[] args) {
