@@ -52,3 +52,20 @@ ALTER TABLE "public"."license" ADD CONSTRAINT "license_pkey" PRIMARY KEY ("id");
 ALTER TABLE "public"."organization" ADD CONSTRAINT "organization_pkey" PRIMARY KEY ("id");
 
 ```
+
+### 3.Kafka配置
+
+#### 3.1 版本信息
+
+- 操作系统：Centos7.8.2003 
+- kafka版本: kafka_2.13-3.0.0
+
+#### 3.2 配置
+- kafka 的server.properties配置
+```properties
+# server.properties的两项配置，防止连接被拒绝
+# 192.168.133.129是kafka部署环境的配置
+# 和自己的主机保持一致，尽量不要使用127.0.0.1之类的
+zookeeper.connect=192.168.133.129:2181
+listeners=PLAINTEXT://192.168.133.129:9092
+```

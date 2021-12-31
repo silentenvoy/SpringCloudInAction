@@ -1,13 +1,13 @@
 package wiki.cccp.organizationservice.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wiki.cccp.organizationservice.config.OrganizationConfig;
 import wiki.cccp.organizationservice.model.Organization;
 import wiki.cccp.organizationservice.service.OrganizationService;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/organization/{organizationId}")
@@ -28,4 +28,5 @@ public class OrganizationController {
     public Boolean deleteOrganization(@PathVariable("organizationId") String organizationId) {
         return organizationService.removeById(organizationId);
     }
+
 }

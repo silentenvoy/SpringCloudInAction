@@ -4,12 +4,21 @@ server:
 spring:
   application:
     name: organizationservice
+
   profiles:
     active: prod
   cloud:
     config:
       uri: http://127.0.0.1:8080
       enabled: true
+    stream:
+      kafka:
+        binder:
+          brokers: 192.168.133.129:9092
+      bindings:
+        output:
+          destination: orgChangeTopic
+          content-type: application/json
 
 management:
   endpoints:
