@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import wiki.cccp.licensingservice.config.LicenseConfig;
+import wiki.cccp.licensingservice.config.ServiceConfig;
 import wiki.cccp.licensingservice.holder.UserContextHolder;
 import wiki.cccp.licensingservice.model.License;
 import wiki.cccp.licensingservice.service.LicenseService;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/license")
 public class LicenseController {
     @Autowired
-    private LicenseConfig config;
+    private ServiceConfig config;
     @Autowired
     private LicenseService licenseService;
 

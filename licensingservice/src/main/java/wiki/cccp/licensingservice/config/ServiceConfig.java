@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @RefreshScope
-public class LicenseConfig {
+public class ServiceConfig {
     @Value("${wiki.cccp.name}")
     private String name;
     @Value("${wiki.cccp.version}")
