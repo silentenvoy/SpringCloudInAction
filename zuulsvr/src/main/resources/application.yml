@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: zuulsvr
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://127.0.0.1:8282
 eureka:
   instance:
     prefer-ip-address: true

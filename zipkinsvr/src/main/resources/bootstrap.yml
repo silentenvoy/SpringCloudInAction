@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: zipkinsvr
+
+server:
+  port: 8282
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8180/eureka
+  instance:
+    prefer-ip-address: true
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
