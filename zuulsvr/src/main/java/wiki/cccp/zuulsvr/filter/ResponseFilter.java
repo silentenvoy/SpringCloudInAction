@@ -1,5 +1,6 @@
 package wiki.cccp.zuulsvr.filter;
 
+import brave.Tracer;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -12,6 +13,8 @@ public class ResponseFilter extends ZuulFilter {
     private static final int FILTER_ORDER = 1;
 
     private static final boolean SHOULD_FILTER = true;
+    @Autowired
+    Tracer tracer;
     @Autowired
     private FilterUtils filterUtils;
 
@@ -37,8 +40,9 @@ public class ResponseFilter extends ZuulFilter {
 
         System.out.println(String.format("添加关联ID : {%s} 到头部", filterUtils.getCorrelationId()));
 
-        currentContext.getResponse().addHeader(FilterUtils.CORRELATION_ID, filterUtils.getCorrelationId());
+//        currentContext.getResponse().addHeader(FilterUtils.CORRELATION_ID, filterUtils.getCorrelationId());
 
+        currentContext.getResponse().addHeader(FilterUtils.CORRELATION_ID, tracer.currentSpan().context().traceIdString());
         System.out.println(String.format("后置过滤器处理的路由URI是 {%s}, 关联ID是 {%s}", currentContext.getRequest().getRequestURI(), filterUtils.getCorrelationId()));
 
         return null;
