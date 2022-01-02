@@ -1,25 +1,24 @@
 package wiki.cccp.organizationservice.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import wiki.cccp.organizationservice.config.OrganizationConfig;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import wiki.cccp.organizationservice.model.Organization;
 import wiki.cccp.organizationservice.service.OrganizationService;
 
-import java.util.Objects;
-
 @RestController
 @RequestMapping(value = "/organization/{organizationId}")
+@Slf4j
 public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
-    @Autowired
-    private OrganizationConfig organizationConfig;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
-        System.out.println(organizationConfig.toString());
+        log.info("组织ID是{}", organizationId);
         System.out.println(Thread.currentThread().getId());
         return organizationService.getOrganization(organizationId);
     }
