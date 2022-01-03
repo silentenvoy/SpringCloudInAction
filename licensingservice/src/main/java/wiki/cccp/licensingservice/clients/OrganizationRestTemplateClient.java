@@ -1,5 +1,7 @@
 package wiki.cccp.licensingservice.clients;
 
+import brave.Span;
+import brave.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -23,6 +25,8 @@ public class OrganizationRestTemplateClient implements OrganizationClient {
     private RestTemplate restTemplate;
     @Autowired
     private OrganizationRepository organizationRepository;
+    @Autowired
+    private Tracer tracer;
     /**
      * 从组织服务获取组织信息
      * @param organizationId
@@ -61,12 +65,16 @@ public class OrganizationRestTemplateClient implements OrganizationClient {
      * @return
      */
     private Organization checkRedisCache(String organizationId) {
+        //在当前的跟踪中添加新的span
+        Span span = tracer.newChild(tracer.currentSpan().context()).name("readLicenseDataFromRedis").start();
         try {
+            //在finally关闭跨度
+            span.tag("peer.service", "redis").kind(Span.Kind.CLIENT);
             return organizationRepository.findOrganization(organizationId);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }finally {
+            span.finish();
         }
-        return null;
+
     }
 
     /**

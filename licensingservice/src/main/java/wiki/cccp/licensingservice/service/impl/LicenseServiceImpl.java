@@ -1,5 +1,7 @@
 package wiki.cccp.licensingservice.service.impl;
 
+import brave.Span;
+import brave.Tracer;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -7,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import wiki.cccp.licensingservice.clients.OrganizationClient;
-import wiki.cccp.licensingservice.holder.UserContext;
 import wiki.cccp.licensingservice.holder.UserContextHolder;
 import wiki.cccp.licensingservice.mapper.LicenseMapper;
 import wiki.cccp.licensingservice.model.License;
@@ -23,7 +24,8 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
     @Autowired
     @Qualifier("restTemplateClient")
     private OrganizationClient client;
-
+    @Autowired
+    private Tracer tracer;
     @Override
     @HystrixCommand(
             fallbackMethod = "fallbackDetails",
@@ -35,13 +37,23 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
         try {
             System.out.println(String.format("%s 的当前线程号：%s", LicenseServiceImpl.class.getName(), Thread.currentThread().getId()));
             System.out.println(UserContextHolder.getContext().getAuthToken());
-            License license = baseMapper.selectById(licenseId);
+            License license = getLicense(licenseId);
             Organization organization = client.getOrganization(license.getOrganizationId());
             license.setOrganization(organization);
             return license;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        }
+    }
+
+    private License getLicense(String licenseId) {
+        Span span = tracer.newChild(tracer.currentSpan().context()).name("readLicenseFromPostgresql").start();
+        try {
+            span.tag("peer.service","postgresql").kind(Span.Kind.CLIENT);
+            return baseMapper.selectById(licenseId);
+        } finally {
+            span.finish();
         }
     }
 
@@ -57,7 +69,6 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
             }
     )
     public List<License> listOrganLicenses(String organizationId) {
-
         randomlyRunLong();
         return baseMapper.queryOrganLicenses(organizationId);
     }
